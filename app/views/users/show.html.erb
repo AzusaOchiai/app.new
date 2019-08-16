@@ -1,0 +1,55 @@
+<!-- top -->
+<p id="notice"><% notice %></p>
+<div class="container">
+	<div class="row">
+    <div class="col-xs-3" >
+<%= render 'users/profile', user: @user, post: @post %>
+     </div>
+
+<div class="col-xs-9">
+<h2>Books</h2>
+    <table class="table table-hover">
+    	<thead>
+    		<tr>
+    			<th></th>
+    			<th>Title</th>
+    			<th>Opinion</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    		<% @user.posts.each do |post| %>
+    		<tr>
+    			<td>
+    			<%= attachment_image_tag @user, :profile_image, format: 'jpeg',fallback: "no_image.jpg", size: "40x40" %>
+
+    			</td>
+    			<td><%= link_to post.title,post_path(post.id) %></td>
+    			<td><%= post.body %></td>
+                <td>
+        <%= link_to post_path(post), method: :get do %>
+        <i class="fa fa-comments"></i>
+        <%= post.post_comments.count %>
+        <% end %>
+                </td>
+                <td>
+      <% if post.favorited_by?(current_user)%>
+      <%= link_to post_favorites_path(post), method: :delete do %>
+      <i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
+      <%= post.favorites.count %>いいね
+      <% end %>
+      <% else %>
+      <%= link_to post_favorites_path(post), method: :post do %>
+      <i class="fa fa-heart-o" aria-hidden="true"></i>
+      <%= post.favorites.count %>いいね
+      <% end %>
+      <% end %>
+
+
+      </td>
+    		</tr>
+    		<% end %>
+    	</tbody>
+    </table>
+   </div>
+ </div>
+</div>

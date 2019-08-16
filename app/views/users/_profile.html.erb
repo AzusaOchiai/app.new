@@ -1,0 +1,63 @@
+<div class="container">
+<div style="color:red">
+
+<% if post.errors.any? %>
+<h3>エラーが<%= post.errors.count %>件あります</h3>
+<% post.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+        <% end %>
+    <% end %>
+    </div>
+
+<div class="row">
+ <div class="col-xs-3" >
+    	<!-- プロフィール -->
+
+    <h2>User Info</h2>
+    <thead>
+        <tr>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        <td>
+<%= attachment_image_tag user, :profile_image, fallback: "no_image.jpg", size: "100x100" %>
+         </td>
+        </tr>
+
+<table class="table sideber">
+<tr>
+<th>name</th>
+<th><%= user.username %></th>
+</tr>
+
+<tr>
+<th>inrtoduction</th>
+<th><%= user.introduction %></th>
+</tr>
+</tbody>
+</table>
+
+<p><%= link_to '', edit_user_path(user.id), class: "btn btn-default btn-block glyphicon glyphicon-wrench" %></p>
+
+
+
+
+     <h2>New Book</h2>
+
+<%= form_for(post) do |f| %>
+
+
+     <h4>Title</h4>
+    <%= f.text_field :title , class: 'btn-block' %>
+
+    <h4>Opinion</h4>
+    <%= f.text_area :body , class: 'btn-block'%>
+    <br>
+    <%= f.submit 'Create Book', method: :get ,class: 'btn btn-primary btn-block'%>
+
+    <% end %>
+</div>
+</div>
+</div>

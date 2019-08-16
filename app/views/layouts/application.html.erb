@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>MY Bookers</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body>
+
+
+<header>
+<nav class="navbar navbar-fixed-top navbar-inverse" >
+<div class="container">
+
+<div id="slidemenu">
+  <span class="header-title">Bookers</span>
+  <ul class="nav navbar-nav navbar-right" data-hover="dropdown" data-animations="zoomIn fadeIn fadeInUp fadeIn">
+    <% if user_signed_in? %>
+
+       <li class="">
+        <!-- マイページ -->
+        <%= link_to ' Home', user_path(current_user.id) , class: 'glyphicon glyphicon-home' %>
+     </li>
+
+       <li class="">
+        <!--  投稿者一覧-->
+        <%= link_to 'Users', users_path , class: 'glyphicon glyphicon-user' %>
+      </li>
+       <li class="">
+        <!-- POST投稿一覧 -->
+        <%= link_to 'Books', posts_path ,class: 'glyphicon glyphicon-book' %>
+      </li>
+
+       <li class="">
+        <%= link_to 'logout', destroy_user_session_path, method: :delete , class: 'glyphicon glyphicon-log-out'%>
+      </li>
+
+    <% else %>
+      <li class="">
+        <%= link_to "Home", root_path , class: 'glyphicon glyphicon-home' %>
+      </li>
+      <li class="">
+        <%= link_to " About", root_path, class: 'glyphicon glyphicon-link' %>
+      </li>
+      <li class="">
+        <%= link_to "Sign Up", new_user_registration_path, class: 'glyphicon glyphicon-edit' %>
+      </li>
+      <li class="">
+        <%= link_to "Log in",user_session_path,class: "glyphicon glyphicon-log-in" %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+</div>
+</nav>
+</header>
+
+<div class="container">
+
+<% if notice %>
+  <p class="alert alert-notice"><%= notice %></p>
+<% end %>
+<% if alert %>
+  <p class="alert alert-error"><%= alert %></p>
+<% end %>
+
+<div class="row">
+<div class="main-visual">
+
+  <%= yield %>
+</div>
+</div>
+</div>
+  <footer>
+  <nav class="navbar-fixed-bottom">
+    <div class="pull-right">CopyRight Infratop.inc</div>
+</nav>
+</footer>
+</div>
+</body>
+</html>
+
+

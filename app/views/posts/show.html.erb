@@ -1,0 +1,90 @@
+<p id="notice"><% notice %></p>
+
+<!-- 本の詳細ページIDごと -->
+<div class="container">
+  <div class="row">
+<!-- サイドメニュー -->
+    <div class="col-xs-3" >
+
+<%= render 'users/profile', user: @user, post: @post_n %>
+    </div>
+
+
+<div class="col-xs-9">
+<h2>Book detail</h2>
+    <table class="table sideber">
+    	<thead>
+    		<tr>
+                <th></th>
+    			<th></th>
+    			<th></th>
+                <th></th>
+                <th></th>
+    		</tr>
+    	</thead>
+<tbody>
+<tr>
+  <td>
+    <%= attachment_image_tag @user,:profile_image, format: 'jpeg',fallback: "no_image.jpg", size: "40x40" %>
+    <br>
+    <%= link_to @user.username,user_path(@user) %>
+<!-- ここにユーザー名が入る -->
+            </td>
+    		<td><%= @post.title %></td>
+    		<td><%= @post.body %></td>
+    <!-- コメント件数 -->
+            <td>
+        <%= link_to post_path(@post), method: :get do %>
+        <%= @post.post_comments.count %>
+        <i class="fa fa-comments"></i>
+        <% end %>
+            </td>
+    <!-- いいね件数 -->
+            <td></td>
+
+        <% if @user == current_user %>
+    		<td><%= link_to "Edit", edit_post_path,class:"btn btn-success" %></td>
+    		<td><%= link_to "Destroy",post_path, method: :delete, data: { confirm: '本当に消しますか？' },class:"btn btn-danger" %></td>
+            <% end %>
+    		</tr>
+<tr>
+    <td style="border-style: none;">
+<i class="fa fa-comments"></i>
+  <span>Comments</span>
+    <% @post.post_comments.each do |post_comment| %>
+    </td>
+</tr>
+
+<tr>
+    <td>
+<!-- それぞれのUSER COMMENTS -->
+    <%= attachment_image_tag post_comment.user ,:profile_image, format: 'jpeg',fallbeck: "no_image.jpg", size: "40x40" %>
+
+    <%= post_comment.user.username %>
+    <%= post_comment.comment %>
+    <br>
+    <%= post_comment.created_at.strftime('%Y/%m/%d') %>
+    <% end %>
+    </td>
+</tr>
+<!-- コメント入力フォーム -->
+<tr>
+    <td>
+
+    <%= form_for [@post, @post_comment] do |f| %>
+    <!-- <div class="row"> -->
+        <div class="col-sm-７">
+            <%= f.text_area :comment, rows:'2', class: "form-control",placeholder: "投稿者への感想をここに" %>
+        </div>
+   <!--  </div> -->
+    <span><%= f.submit "送信する", class: "btn btn-lg btn-base-1 mt-20 pull-right" %></span>
+<% end %>
+
+</td>
+</tr>
+    	</tbody>
+    </table>
+   </div>
+
+</div>
+</div>
